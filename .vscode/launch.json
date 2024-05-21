@@ -11,30 +11,12 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=ilmenit-encounter-rust",
-                    "--package=ilmenit-encounter-rust"
+                    "--bin=main_raylib",
+                    "--package=ilmenit-encounter-rust",
+                    "--features=for_raylib",
                 ],
                 "filter": {
-                    "name": "ilmenit-encounter-rust",
-                    "kind": "bin"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug unit tests in executable 'ilmenit-encounter-rust'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--bin=ilmenit-encounter-rust",
-                    "--package=ilmenit-encounter-rust"
-                ],
-                "filter": {
-                    "name": "ilmenit-encounter-rust",
+                    "name": "main_raylib",
                     "kind": "bin"
                 }
             },

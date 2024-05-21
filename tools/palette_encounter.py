@@ -26,19 +26,15 @@ def get_color(row, col):
 colors = [get_color(row, col) for row in range(rows) for col in range(cols)]
 
 # Prepare the colors in Rust format
-rust_colors = [
-    f"Color::get_color({hex((((((r << 8) + g) << 8) + b) << 8) + 0xff)})"
-    for r, g, b in colors
-]
+rust_colors = [f"{hex(((((r << 8) + g) << 8) + b) )}" for r, g, b in colors]
 
 # Display the Rust array
 rust_code = (
     """
-use raylib::prelude::*;
-pub fn make_palette() -> Box<[Color; 256]> { Box::new([
+pub fn get_palette() -> [u32; 256] { [
 """
     + "    "
     + ",\n    ".join(rust_colors)
-    + "\n])\n}\n"
+    + "\n] }\n"
 )
 print(rust_code)
