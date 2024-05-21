@@ -34,7 +34,7 @@ fn main() {
     let palette = make_palette();
 
     while !rl.window_should_close() {
-        let t = (rl.get_time() as f32) * 0.5;
+        let t = rl.get_time() as f32;
 
         let mut d0 = rl.begin_drawing(&thread);
 
