@@ -1,6 +1,6 @@
-Buggy port of https://github.com/ilmenit/sizecoding/blob/main/Encounter/Encounter.md to Rust.
+Port of https://github.com/ilmenit/sizecoding/blob/main/Encounter/Encounter.md to Rust.
 
-I can't find the *+%!@* bug >:-(
+The palette is precalculated (thanks, ilmenit!!!) because MicroW8 does some pixel shader magic I didn't implement. This is the difference:
 
 These are all images at time = 5sec:
 
@@ -9,9 +9,3 @@ Original
 
 Rust, with calculated palette
 ![alt text](assets/encounter-rust-calculated-palette.png)
-
-Rust, with fixed palette (Thanks, ilmenit!!)
-![alt text](assets/encounter-rust-fixed-palette.png)
-
-The Rust version is very different and I can't find any differences in the code.
-(https://raw.githubusercontent.com/ilmenit/sizecoding/main/Encounter/encounter.cwa)

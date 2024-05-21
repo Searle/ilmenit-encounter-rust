@@ -1,8 +1,7 @@
 extern crate raylib;
-use raylib::ffi::SetTextureFilter;
-use raylib::prelude::*;
-// use std::f32::consts::PI;
+
 use rand::random;
+use raylib::prelude::*;
 
 mod palette_encounter;
 
@@ -10,24 +9,21 @@ use crate::palette_encounter::*;
 
 fn main() {
     let (screen_width, screen_height) = (320, 240);
+    let view_scale = 2;
 
-    let (window_width, window_height) = (screen_width * 2, screen_height * 2);
+    let (window_width, window_height) = (screen_width * view_scale, screen_height * view_scale);
 
     let (mut rl, thread) = raylib::init()
         .size(window_width, window_height)
-        .title("Wave Simulation")
+        .title("Ilmenit Encounter ported to Rust")
         .build();
 
     let mut target = rl
         .load_render_texture(&thread, screen_width as u32, screen_height as u32)
         .expect("Failed to load render texture");
-
-    unsafe {
-        SetTextureFilter(
-            target.texture,
-            raylib::consts::TextureFilter::TEXTURE_FILTER_POINT as i32,
-        );
-    }
+    target
+        .texture()
+        .set_texture_filter(&thread, raylib::consts::TextureFilter::TEXTURE_FILTER_POINT);
 
     rl.set_target_fps(60);
 
@@ -41,11 +37,10 @@ fn main() {
         {
             let mut d = d0.begin_texture_mode(&thread, &mut target);
 
-            d.clear_background(Color::ORANGE);
+            // d.clear_background(Color::ORANGE);
 
             for fx in 0..screen_width {
-                let prev_wave_height = 0.0;
-                let mut prev_fy0 = 0;
+                let mut prev_wave_height = 0.0;
 
                 for fy in 0..screen_height {
                     // define the vanishing point coordinates
@@ -104,10 +99,15 @@ fn main() {
                     // set color with slight film grain effect (also to remove color banding)
                     let final_color = (250.0 * p_color + 6.0 * random::<f32>()) as u8 as usize;
 
-                    let fy0 = (fy + perspective_height as i32).min(239).max(0);
-
-                    d.draw_line(fx, prev_fy0, fx, fy0, palette[final_color]);
-                    prev_fy0 = fy0;
+                    // draw lines also for blob to immitate reflection
+                    d.draw_line(
+                        fx,
+                        fy + perspective_height.ceil() as i32,
+                        fx,
+                        fy + prev_wave_height.floor() as i32,
+                        palette[final_color],
+                    );
+                    prev_wave_height = perspective_height;
                 }
 
                 // set ocean palette with a bit of yellow tint
