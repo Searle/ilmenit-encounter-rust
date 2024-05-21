@@ -1,4 +1,4 @@
 /target
 /microw8*
 /*.bak*
-/tools
+.venv

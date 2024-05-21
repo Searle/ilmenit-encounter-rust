@@ -4,9 +4,9 @@ use raylib::prelude::*;
 // use std::f32::consts::PI;
 use rand::random;
 
-mod pallette;
+mod palette_encounter;
 
-use crate::pallette::*;
+use crate::palette_encounter::*;
 
 fn main() {
     let (screen_width, screen_height) = (320, 240);
@@ -31,7 +31,7 @@ fn main() {
 
     rl.set_target_fps(60);
 
-    let mut palette = make_palette();
+    let palette = make_palette();
 
     while !rl.window_should_close() {
         let t = (rl.get_time() as f32) * 0.5;
@@ -111,25 +111,28 @@ fn main() {
                 }
 
                 // set ocean palette with a bit of yellow tint
-
-                let index = (fx as i32) % 128;
-                palette[index as usize] =
-                    Color::new((2 * index / 4) as u8, 0, (3 * index / 4) as u8, 255);
-                palette[(index + 128) as usize] = Color::new(
-                    (4 * index / 2) as u8,
-                    (64 + 3 * index / 2) as u8,
-                    (96 + 2 * index / 2) as u8,
-                    255,
-                );
-
+                // These approaches don't work, the colors are off.
+                // Maybe MicroW8 does some pixel shader magic, maybe I still have a stupid bug here.
+                // I used the fixed palette ilmentit sent me (Thanks!!!).
+                /*
+                    let index = (fx as i32) % 128;
+                    palette[index as usize] =
+                        Color::new((2 * index / 4) as u8, 0, (3 * index / 4) as u8, 255);
+                    palette[(index + 128) as usize] = Color::new(
+                        (4 * index / 2) as u8,
+                        (64 + 3 * index / 2) as u8,
+                        (96 + 2 * index / 2) as u8,
+                        255,
+                    );
+                */
                 /*
                     let index: u32 = (fx as u32) % 128;
                     palette[index as usize] = Color::get_color(0x03020000 * (index / 4) + 0xff);
                     palette[(index + 128) as usize] =
                         Color::get_color(0x02030400 * (index / 2) + 0x604000ff);
                 */
-
                 /*
+                    // Original code:
                     let inline index = (fx as i32) % 128;
                     let inline i = 4*index;
                     i!0x13000 =  0x030200*(index/4);
