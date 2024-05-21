@@ -101,9 +101,9 @@ fn main() {
 
                     // draw lines also for blob to immitate reflection
                     d.draw_line(
-                        fx,
+                        fx + 1,
                         fy + perspective_height.ceil() as i32,
-                        fx,
+                        fx + 1,
                         fy + prev_wave_height.floor() as i32,
                         palette[final_color],
                     );
